@@ -10,10 +10,11 @@ exports.LoanModule = void 0;
 const common_1 = require("@nestjs/common");
 const loan_controller_1 = require("./loan.controller");
 const loan_service_1 = require("./loan.service");
+const loan_evaluation_engine_1 = require("./loan-evaluation.engine");
 let LoanModule = class LoanModule {
 };
 exports.LoanModule = LoanModule;
 exports.LoanModule = LoanModule = __decorate([
-    (0, common_1.Module)({ controllers: [loan_controller_1.LoanController], providers: [loan_service_1.LoanService] })
+    (0, common_1.Module)({ controllers: [loan_controller_1.LoanController], providers: [loan_service_1.LoanService, loan_evaluation_engine_1.LoanEvaluationEngine] })
 ], LoanModule);
 //# sourceMappingURL=loan.module.js.map
