@@ -16,6 +16,8 @@ exports.LoanController = void 0;
 const common_1 = require("@nestjs/common");
 const loan_dto_1 = require("./loan.dto");
 const loan_service_1 = require("./loan.service");
+const eligibility_summary_dto_1 = require("./eligibility-summary.dto");
+const auth_guard_1 = require("../common/guards/auth.guard");
 let LoanController = class LoanController {
     loanService;
     constructor(loanService) {
@@ -23,6 +25,19 @@ let LoanController = class LoanController {
     }
     evaluate(request) {
         return this.loanService.evaluate(request);
+    }
+    getEligibilitySummary(applicantId, creditScore) {
+        if (!creditScore) {
+            throw new common_1.BadRequestException('creditScore query parameter is required');
+        }
+        const parsedScore = parseInt(creditScore, 10);
+        if (isNaN(parsedScore) || parsedScore < 0) {
+            throw new common_1.BadRequestException('creditScore must be a valid non-negative number');
+        }
+        if (!applicantId) {
+            throw new common_1.NotFoundException('applicantId query parameter is required');
+        }
+        return this.loanService.getEligibilitySummary(applicantId, parsedScore);
     }
 };
 exports.LoanController = LoanController;
@@ -33,6 +48,15 @@ __decorate([
     __metadata("design:paramtypes", [loan_dto_1.LoanRequestDto]),
     __metadata("design:returntype", loan_dto_1.LoanDecisionDto)
 ], LoanController.prototype, "evaluate", null);
+__decorate([
+    (0, common_1.Get)('eligibility-summary'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __param(0, (0, common_1.Query)('applicantId')),
+    __param(1, (0, common_1.Query)('creditScore')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", eligibility_summary_dto_1.EligibilitySummaryDto)
+], LoanController.prototype, "getEligibilitySummary", null);
 exports.LoanController = LoanController = __decorate([
     (0, common_1.Controller)('api/loans'),
     __metadata("design:paramtypes", [loan_service_1.LoanService])

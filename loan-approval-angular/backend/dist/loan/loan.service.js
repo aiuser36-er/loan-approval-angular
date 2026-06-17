@@ -20,6 +20,21 @@ let LoanService = class LoanService {
     evaluate(request) {
         return this.evaluationEngine.evaluate(request);
     }
+    getEligibilitySummary(applicantId, creditScore) {
+        const isEligible = creditScore >= 600;
+        const message = this.generateEligibilityMessage(creditScore);
+        return {
+            applicantId,
+            creditScore,
+            message,
+            isEligible,
+        };
+    }
+    generateEligibilityMessage(creditScore) {
+        const minimumRequired = 600;
+        const eligibilityStatus = creditScore >= minimumRequired ? 'Eligible!' : 'Not eligible.';
+        return `Your score is ${creditScore}, minimum required is ${minimumRequired}. ${eligibilityStatus}`;
+    }
 };
 exports.LoanService = LoanService;
 exports.LoanService = LoanService = __decorate([

@@ -12,3 +12,10 @@ export interface LoanDecision {
   interestRate: number | null;
   reason: string;
 }
+
+export interface EligibilitySummary {
+  applicantId: string;
+  creditScore: number;
+  message: string;
+  isEligible: boolean;
+}

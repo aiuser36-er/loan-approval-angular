@@ -1,0 +1,51 @@
+.eligibility-container {
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  max-width: 500px;
+  margin: 1rem 0;
+
+  &.eligible {
+    border-color: #4caf50;
+    background-color: #f1f8f4;
+  }
+
+  &.not-eligible {
+    border-color: #f44336;
+    background-color: #fff3f3;
+  }
+}
+
+.eligibility-header {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+
+  &.eligible {
+    color: #4caf50;
+  }
+
+  &.not-eligible {
+    color: #f44336;
+  }
+}
+
+.eligibility-message {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.eligibility-credit-score {
+  font-size: 0.875rem;
+  color: #666;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ddd;
+}
+
+.score-value {
+  font-weight: bold;
+  color: #333;
+}

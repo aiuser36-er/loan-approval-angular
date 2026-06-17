@@ -1,0 +1,21 @@
+<div *ngIf="eligibility" [ngClass]="{
+  'eligibility-container': true,
+  'eligible': eligibility.isEligible,
+  'not-eligible': !eligibility.isEligible
+}">
+  <div [ngClass]="{
+    'eligibility-header': true,
+    'eligible': eligibility.isEligible,
+    'not-eligible': !eligibility.isEligible
+  }">
+    {{ eligibility.isEligible ? '✓ Eligible' : '✗ Not Eligible' }}
+  </div>
+
+  <div class="eligibility-message">
+    {{ eligibility.message }}
+  </div>
+
+  <div class="eligibility-credit-score">
+    Applicant ID: <span class="score-value">{{ eligibility.applicantId }}</span>
+  </div>
+</div>

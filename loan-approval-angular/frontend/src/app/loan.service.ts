@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { LoanDecision, LoanRequest } from './loan.model';
+import { LoanDecision, LoanRequest, EligibilitySummary } from './loan.model';
 
 @Injectable({ providedIn: 'root' })
 export class LoanService {
@@ -23,6 +23,24 @@ export class LoanService {
     return this.http.get<LoanDecision[]>(`${this.apiUrl}/history/${applicantId}`).pipe(
       catchError((err) => {
         const message = err?.error?.message || err?.message || `Unable to fetch loan history for applicant ${applicantId}`;
+        return throwError(() => new Error(message));
+      })
+    );
+  }
+
+  /**
+   * Retrieves applicant eligibility summary based on credit score.
+   * @param applicantId - The applicant identifier
+   * @param creditScore - The credit score to evaluate
+   * @returns Observable of eligibility summary with score-specific feedback
+   */
+  getEligibilitySummary(applicantId: string, creditScore: number): Observable<EligibilitySummary> {
+    return this.http.get<EligibilitySummary>(
+      `${this.apiUrl}/eligibility-summary`,
+      { params: { applicantId, creditScore: creditScore.toString() } }
+    ).pipe(
+      catchError((err) => {
+        const message = err?.error?.message || err?.message || `Unable to fetch eligibility summary for applicant ${applicantId}`;
         return throwError(() => new Error(message));
       })
     );
